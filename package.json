@@ -11,7 +11,7 @@
     "test--ci": "jest --coverage --runInBand",
     "test--watch": "jest --watch --verbose",
     "test--snapshots": "jest --updateSnapshot",
-    "prettier": "prettier --parser typescript --write 'src/client/**/*.ts' 'src/client/**/*.tsx'"
+    "prettier": "prettier --parser typescript --write 'src/client/**/*.js' 'src/client/**/*.jsx'"
   },
   "keywords": [],
   "author": "",
