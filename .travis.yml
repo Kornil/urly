@@ -1,0 +1,29 @@
+language: node_js
+node_js:
+  - "8"
+cache:
+  directories:
+    - "node_modules"
+
+before_install:
+  - npm i -g codecov now
+
+install:
+  - npm install
+
+before_script:
+  - greenkeeper-lockfile-update
+
+script:
+  - npm run test--ci
+  - npm run build
+
+after_script:
+  - codecov
+
+deploy:
+  provider: script
+  script: now -p -t $NOW_TOKEN && now alias -t $NOW_TOKEN && now rm personal-website --safe --yes -t $NOW_TOKEN
+  skip_cleanup: true
+  on:
+    master: true
