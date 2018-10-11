@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Form, ErrorDialog } from "./components";
+import { Form, ErrorDialog, StyledPageLayout, ShortLinkList } from "./components";
 
 class App extends Component {
   state = {
@@ -33,21 +33,16 @@ class App extends Component {
 
     const hasCache = cachedUrls && Object.keys(cachedUrls).length > 0;
     return (
-      <main className="container">
-        <Form fetchShortLinks={this.fetchShortLinks} />
-        {error && <ErrorDialog error={error} />}
-        {hasCache &&
-          Object.keys(cachedUrls).map(key => (
-            <a
-              key={key}
-              href={cachedUrls[key].url}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              {key} - {cachedUrls[key].url}
-            </a>
-          ))}
-      </main>
+      <StyledPageLayout>
+        <div>
+          <h1>Url Shortener</h1>
+          <Form fetchShortLinks={this.fetchShortLinks} />
+          {error && <ErrorDialog error={error} />}
+          {hasCache && (
+            <ShortLinkList cachedUrls={cachedUrls} />
+          )}
+        </div>
+      </StyledPageLayout>
     );
   }
 }
