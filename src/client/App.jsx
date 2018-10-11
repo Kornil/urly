@@ -5,7 +5,7 @@ import { Form, ErrorDialog } from "./components";
 class App extends Component {
   state = {
     cachedUrls: {},
-    error: "",
+    error: ""
   };
 
   componentDidMount() {
@@ -18,9 +18,9 @@ class App extends Component {
 
       const data = await response.json();
 
-        this.setState({
-          cachedUrls: data,
-        });
+      this.setState({
+        cachedUrls: data
+      });
     } catch (error) {
       this.setState({
         error
@@ -29,31 +29,24 @@ class App extends Component {
   };
 
   render() {
-    const {
-      cachedUrls,
-      error,
-    } = this.state;
+    const { cachedUrls, error } = this.state;
 
     const hasCache = cachedUrls && Object.keys(cachedUrls).length > 0;
     return (
       <main className="container">
-        <div>
-          <Form fetchShortLinks={this.fetchShortLinks} />
-          {error && (
-            <ErrorDialog error={error} />
-          )}
-          {hasCache &&
-            Object.keys(cachedUrls).map(key => (
-              <a
-                key={key}
-                href={cachedUrls[key].url}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {key} - {cachedUrls[key].url}
-              </a>
-            ))}
-        </div>
+        <Form fetchShortLinks={this.fetchShortLinks} />
+        {error && <ErrorDialog error={error} />}
+        {hasCache &&
+          Object.keys(cachedUrls).map(key => (
+            <a
+              key={key}
+              href={cachedUrls[key].url}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {key} - {cachedUrls[key].url}
+            </a>
+          ))}
       </main>
     );
   }
