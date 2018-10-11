@@ -19,9 +19,7 @@ fetchMock.get(
 fetchMock.post(
   `*`,
   JSON.stringify({
-    payload: {
-      hash: "someHash"
-    }
+    hash: "someHash"
   })
 );
 
@@ -42,8 +40,10 @@ const successData = {
   error: "",
   status: "success",
   cachedUrls: {
-    MDL7g1YiM: {
-      url: "http://google.com"
+    payload: {
+      MDL7g1YiM: {
+        url: "http://google.com"
+      }
     }
   },
   ...defaultData
@@ -57,7 +57,7 @@ const errorData = {
 };
 
 const successSubmitData = {
-  cachedUrls: { MDL7g1YiM: { url: "http://google.com" } },
+  cachedUrls: { payload: { MDL7g1YiM: { url: "http://google.com" } } },
   error: "",
   isFormSent: true,
   shortLink: "someHash",
@@ -66,12 +66,11 @@ const successSubmitData = {
 };
 
 describe("<App />", () => {
-
   const event = { preventDefault: () => {} };
 
   afterEach(() => {
     ReactDOM.unmountComponentAtNode(document);
-  })
+  });
 
   it("mount with default state", () => {
     const wrapper = shallow(<App />);
@@ -125,5 +124,5 @@ describe("<App />", () => {
     await instance.resetForm();
 
     expect(wrapper.state()).toEqual(initialData);
-  })
+  });  
 });
