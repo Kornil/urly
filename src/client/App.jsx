@@ -42,7 +42,7 @@ class App extends Component {
         <div>
           <h1>Url Shortener</h1>
           <Form fetchShortLinks={this.fetchShortLinks} />
-          {error && <ErrorDialog error={error} />}
+          {error && <ErrorDialog error={JSON.stringify(error)} />}
           {hasCache && <ShortLinkList cachedUrls={cachedUrls} />}
         </div>
       </StyledPageLayout>
