@@ -3,7 +3,9 @@ import React, { Component } from "react";
 class App extends Component {
   state = {
     value: "",
-    cachedUrls: {}
+    cachedUrls: {},
+    status: null,
+    error: null
   };
 
   componentDidMount() {
@@ -11,12 +13,20 @@ class App extends Component {
   }
 
   fetchShortLinks = async () => {
-    const response = await fetch("/v1/links");
+    try {
+      const response = await fetch("/v1/links");
 
-    const data = await response.json();
-    this.setState({
-      cachedUrls: JSON.parse(data)
-    });
+      const data = await response.json();
+      this.setState({
+        cachedUrls: JSON.parse(data),
+        status: "success"
+      });
+    } catch (error) {
+      this.setState({
+        status: "error",
+        error
+      });
+    }
   };
 
   handleChange = event => {
@@ -44,14 +54,20 @@ class App extends Component {
   };
 
   render() {
-    const { value, cachedUrls } = this.state;
+    const { value, cachedUrls, status, error } = this.state;
     return (
       <main className="container">
         <div>
           <form onSubmit={this.handleSubmit} method="post" action="/v1/links">
             <input onChange={this.handleChange} type="text" value={value} />
           </form>
-          {Object.keys(cachedUrls).map(key => (
+          {status === "error" && (
+            <p>
+              There was an error fetching your shortlinks, please refresh the
+              page: {error}
+            </p>
+          )}
+          {status === "success" && Object.keys(cachedUrls).map(key => (
             <a
               href={cachedUrls[key].url}
               rel="noopener noreferrer"
