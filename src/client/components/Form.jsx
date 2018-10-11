@@ -40,7 +40,7 @@ class Form extends Component {
     this.setState({
       shortLink: "",
       isFormSent: false,
-      value: "",
+      value: ""
     });
   };
 
@@ -72,7 +72,7 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  fetchShortLinks: PropTypes.func.isRequired,
+  fetchShortLinks: PropTypes.func.isRequired
 };
 
 export default Form;

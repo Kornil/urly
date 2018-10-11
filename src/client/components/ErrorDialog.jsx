@@ -9,7 +9,7 @@ const ErrorDialog = ({ error }) => (
 );
 
 ErrorDialog.propTypes = {
-    error: PropTypes.string.isRequired,
-}
+  error: PropTypes.string.isRequired
+};
 
 export default ErrorDialog;

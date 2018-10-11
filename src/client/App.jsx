@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 
-import { Form, ErrorDialog, StyledPageLayout, ShortLinkList } from "./components";
+import {
+  Form,
+  ErrorDialog,
+  StyledPageLayout,
+  ShortLinkList
+} from "./components";
 
 class App extends Component {
   state = {
@@ -38,9 +43,7 @@ class App extends Component {
           <h1>Url Shortener</h1>
           <Form fetchShortLinks={this.fetchShortLinks} />
           {error && <ErrorDialog error={error} />}
-          {hasCache && (
-            <ShortLinkList cachedUrls={cachedUrls} />
-          )}
+          {hasCache && <ShortLinkList cachedUrls={cachedUrls} />}
         </div>
       </StyledPageLayout>
     );
