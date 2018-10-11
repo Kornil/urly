@@ -6,9 +6,12 @@ import bodyParser from "body-parser";
 import validUrl from "valid-url";
 import shortid from "shortid";
 import NodeCache from "node-cache";
+import "isomorphic-fetch";
 
 import App from "../client/App";
 import htmlMarkup from "./htmlMarkup";
+
+require("es6-promise").polyfill();
 
 const app = express();
 
