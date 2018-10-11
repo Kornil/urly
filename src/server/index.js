@@ -21,7 +21,9 @@ app.use(express.static("public"));
 
 app.use(bodyParser.json());
 
-app.post("/v1/links", (req, res) => {
+app
+  .route("/v1/links")
+  .post((req, res) => {
     const { url } = req.body;
 
     if (validUrl.isHttpUri(url)) {
@@ -34,6 +36,13 @@ app.post("/v1/links", (req, res) => {
       res.status(500).json(JSON.stringify("Url provided is invalid"));
     }
   })
+  .get((req, res) => {
+    const totalUrls = urlCache.keys();
+    urlCache.mget(totalUrls, (error, values) => {
+      if (error) throw error;
+      res.json(JSON.stringify(values));
+    });
+  });
 
 app.get("/v1/:hash", (req, res) => {
   const { hash } = req.params;
