@@ -5,7 +5,9 @@ class App extends Component {
     value: "",
     cachedUrls: {},
     status: null,
-    error: null
+    error: null,
+    isFormSent: false,
+    shortLink: ""
   };
 
   componentDidMount() {
@@ -16,9 +18,9 @@ class App extends Component {
     try {
       const response = await fetch("/v1/links");
 
-      const data = await response.json();
+      const { payload } = await response.json();
       this.setState({
-        cachedUrls: JSON.parse(data),
+        cachedUrls: payload,
         status: "success"
       });
     } catch (error) {
@@ -37,6 +39,7 @@ class App extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
+
     const { value } = this.state;
 
     const response = await fetch("/v1/links", {
@@ -46,36 +49,82 @@ class App extends Component {
       },
       body: JSON.stringify({ url: value })
     });
-    const data = await response.json();
+    const { payload } = await response.json();
 
-    console.log(data);
+    this.setState({
+      isFormSent: true,
+      shortLink: payload.hash
+    });
 
     this.fetchShortLinks();
   };
 
+  resetForm = () => {
+    this.setState({
+      shortLink: "",
+      isFormSent: false,
+      value: "",
+      status: null,
+      error: null
+    });
+  };
+
   render() {
-    const { value, cachedUrls, status, error } = this.state;
+    const {
+      value,
+      cachedUrls,
+      status,
+      error,
+      isFormSent,
+      shortLink
+    } = this.state;
     return (
       <main className="container">
         <div>
-          <form onSubmit={this.handleSubmit} method="post" action="/v1/links">
-            <input onChange={this.handleChange} type="text" value={value} />
-          </form>
+          {!isFormSent ? (
+            <form onSubmit={this.handleSubmit} method="post" action="/v1/links">
+              <input
+                onChange={this.handleChange}
+                id="shortLinkInput"
+                name="shortLinkInput"
+                type="text"
+                value={value}
+              />
+            </form>
+          ) : (
+            <>
+              <h2>
+                Your shortlink is{" "}
+                <a
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={cachedUrls.shortLink}
+                >
+                  {shortLink}
+                </a>
+              </h2>
+              <button onClick={this.resetForm}>Go back</button>
+            </>
+          )}
+
           {status === "error" && (
             <p>
               There was an error fetching your shortlinks, please refresh the
               page: {error}
             </p>
           )}
-          {status === "success" && Object.keys(cachedUrls).map(key => (
-            <a
-              href={cachedUrls[key].url}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              {key} - {cachedUrls[key].url}
-            </a>
-          ))}
+
+          {status === "success" &&
+            Object.keys(cachedUrls).map(key => (
+              <a
+                key={key}
+                href={cachedUrls[key].url}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {key} - {cachedUrls[key].url}
+              </a>
+            ))}
         </div>
       </main>
     );
