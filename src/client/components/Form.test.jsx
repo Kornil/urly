@@ -32,7 +32,7 @@ describe("<Form />", () => {
   const event = { preventDefault: () => {} };
 
   it("should respond to change event and change state", () => {
-    const wrapper = shallow(<Form />);
+    const wrapper = shallow(<Form fetchShortLinks={() => {}} />);
     wrapper.find("#shortLinkInput").simulate("change", {
       target: { name: "shortLinkInput", value: "hello" }
     });
@@ -51,7 +51,7 @@ describe("<Form />", () => {
   });
 
   it("should reset all state", async () => {
-    const wrapper = shallow(<Form />);
+    const wrapper = shallow(<Form fetchShortLinks={() => {}} />);
     const instance = wrapper.instance();
 
     await instance.resetForm();
