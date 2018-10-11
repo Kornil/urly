@@ -34,13 +34,14 @@ app
 
       urlCache.set(shortId, { url });
 
-      res.json(JSON.stringify({ hash: shortId }));
+      res.json({ hash: shortId });
     } else {
-      res.status(500).json(JSON.stringify("Url provided is invalid"));
+      res.status(500).send("Url provided is invalid");
     }
   })
   .get((req, res) => {
     const totalUrls = urlCache.keys();
+
     if (totalUrls.length) {
       urlCache.mget(totalUrls, (error, values) => {
         if (error) throw error;
