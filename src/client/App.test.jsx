@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import fetchMock from "fetch-mock";
 import { shallow } from "enzyme";
 
-import App from "./../../App";
+import App from "./App";
 
 fetchMock.get(
   `*`,
@@ -18,13 +18,11 @@ fetchMock.get(
 
 const initialData = {
   error: "",
-  status: null,
   cachedUrls: {}
 };
 
 const successData = {
   error: "",
-  status: "success",
   cachedUrls: {
     payload: {
       MDL7g1YiM: {
@@ -36,10 +34,8 @@ const successData = {
 
 const errorData = {
   error: "there was an error",
-  status: "error",
   cachedUrls: {}
 };
-
 
 describe("<App />", () => {
   afterEach(() => {
