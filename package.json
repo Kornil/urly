@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start--dev": "webpack -w & nodemon server.js",
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "build": "cross-env NODE_ENV=production webpack -p",
     "test": "jest --coverage --verbose",
     "test--ci": "jest --coverage --runInBand",
