@@ -43,11 +43,8 @@ class App extends Component {
       <main className="container">
         <div>
           <Form fetchShortLinks={this.fetchShortLinks} />
-          {status === "error" && (
-            <p>
-              There was an error fetching your shortlinks, please refresh the
-              page: {error}
-            </p>
+          {error && (
+            <ErrorDialog error={error} />
           )}
           {hasCache &&
             Object.keys(cachedUrls).map(key => (
