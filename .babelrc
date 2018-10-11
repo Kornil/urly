@@ -1,0 +1,34 @@
+{
+  "presets": [
+    "@babel/react",
+    [
+      "@babel/env",
+      {
+        "modules": false,
+        "useBuiltIns": "usage"
+      }
+    ]
+  ],
+  "plugins": [
+    ["emotion", { "hoist": true }],
+    "react-hot-loader/babel",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-async-to-generator"
+  ],
+  "env": {
+    "development": {
+      "plugins": [["emotion", { "sourceMap": true, "autoLabel": true }]]
+    },
+    "test": {
+      "presets": [
+        "@babel/react",
+        ["@babel/env", { "modules": "commonjs" }]
+      ],
+      "plugins": [
+        "@babel/plugin-transform-runtime",
+        ["emotion", { "sourceMap": true, "autoLabel": true }]
+      ]
+    }
+  }
+}
