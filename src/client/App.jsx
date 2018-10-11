@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 
-import { Form } from "./components";
+import { Form, ErrorDialog } from "./components";
 
 class App extends Component {
   state = {
     cachedUrls: {},
-    status: null,
     error: "",
   };
 
@@ -21,11 +20,9 @@ class App extends Component {
 
         this.setState({
           cachedUrls: data,
-          status: "success"
         });
     } catch (error) {
       this.setState({
-        status: "error",
         error
       });
     }
@@ -34,7 +31,6 @@ class App extends Component {
   render() {
     const {
       cachedUrls,
-      status,
       error,
     } = this.state;
 
