@@ -46,8 +46,6 @@ app
         if (error) throw error;
         res.json(values);
       });
-    } else {
-      res.send("No cached shortLinks.")
     }
   });
 
