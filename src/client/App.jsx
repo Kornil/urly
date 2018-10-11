@@ -65,7 +65,7 @@ class App extends Component {
       isFormSent: false,
       value: "",
       status: null,
-      error: null
+      error: ""
     });
   };
 
@@ -110,7 +110,7 @@ class App extends Component {
           {status === "error" && (
             <p>
               There was an error fetching your shortlinks, please refresh the
-              page: {error}
+              page: {error.message}
             </p>
           )}
 

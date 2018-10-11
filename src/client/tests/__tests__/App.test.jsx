@@ -32,14 +32,14 @@ const defaultData = {
 };
 
 const initialData = {
-  error: null,
+  error: "",
   status: null,
   cachedUrls: {},
   ...defaultData
 };
 
 const successData = {
-  error: null,
+  error: "",
   status: "success",
   cachedUrls: {
     MDL7g1YiM: {
@@ -58,7 +58,7 @@ const errorData = {
 
 const successSubmitData = {
   cachedUrls: { MDL7g1YiM: { url: "http://google.com" } },
-  error: null,
+  error: "",
   isFormSent: true,
   shortLink: "someHash",
   status: "success",
