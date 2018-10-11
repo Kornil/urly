@@ -41,10 +41,14 @@ app
   })
   .get((req, res) => {
     const totalUrls = urlCache.keys();
-    urlCache.mget(totalUrls, (error, values) => {
-      if (error) throw error;
-      res.json(JSON.stringify(values));
-    });
+    if (totalUrls.length) {
+      urlCache.mget(totalUrls, (error, values) => {
+        if (error) throw error;
+        res.json(values);
+      });
+    } else {
+      res.send("No cached shortLinks.")
+    }
   });
 
 app.get("/v1/:hash", (req, res) => {
