@@ -3,7 +3,6 @@ import express from "express";
 import { renderToString } from "react-dom/server";
 import { renderStylesToString } from "emotion-server";
 import bodyParser from "body-parser";
-import validUrl from "valid-url";
 import shortid from "shortid";
 import NodeCache from "node-cache";
 import "isomorphic-fetch";
@@ -29,15 +28,11 @@ app
   .post((req, res) => {
     const { url } = req.body;
 
-    if (validUrl.isHttpUri(url)) {
-      const shortId = shortid.generate();
+    const shortId = shortid.generate();
 
-      urlCache.set(shortId, { url });
+    urlCache.set(shortId, { url });
 
-      res.json({ hash: shortId });
-    } else {
-      res.status(500).send("Url provided is invalid");
-    }
+    res.json({ hash: shortId });
   })
   .get((req, res) => {
     const totalUrls = urlCache.keys();

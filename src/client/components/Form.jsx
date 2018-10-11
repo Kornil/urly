@@ -53,7 +53,7 @@ class Form extends Component {
           onChange={this.handleChange}
           id="shortLinkInput"
           name="shortLinkInput"
-          type="text"
+          type="url"
           value={value}
         />
       </form>
