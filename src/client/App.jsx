@@ -5,7 +5,7 @@ class App extends Component {
     value: "",
     cachedUrls: {},
     status: null,
-    error: null,
+    error: "",
     isFormSent: false,
     shortLink: ""
   };
@@ -18,11 +18,12 @@ class App extends Component {
     try {
       const response = await fetch("/v1/links");
 
-      const { payload } = await response.json();
-      this.setState({
-        cachedUrls: payload,
-        status: "success"
-      });
+      const data = await response.json();
+
+        this.setState({
+          cachedUrls: data,
+          status: "success"
+        });
     } catch (error) {
       this.setState({
         status: "error",
@@ -49,11 +50,11 @@ class App extends Component {
       },
       body: JSON.stringify({ url: value })
     });
-    const { payload } = await response.json();
+    const { hash } = await response.json();
 
     this.setState({
       isFormSent: true,
-      shortLink: payload.hash
+      shortLink: hash
     });
 
     this.fetchShortLinks();
@@ -78,6 +79,8 @@ class App extends Component {
       isFormSent,
       shortLink
     } = this.state;
+
+    const hasCache = cachedUrls && Object.keys(cachedUrls).length > 0;
     return (
       <main className="container">
         <div>
@@ -98,7 +101,7 @@ class App extends Component {
                 <a
                   rel="noopener noreferrer"
                   target="_blank"
-                  href={cachedUrls.shortLink}
+                  href={value}
                 >
                   {shortLink}
                 </a>
@@ -106,15 +109,13 @@ class App extends Component {
               <button onClick={this.resetForm}>Go back</button>
             </>
           )}
-
           {status === "error" && (
             <p>
               There was an error fetching your shortlinks, please refresh the
-              page: {error.message}
+              page: {error}
             </p>
           )}
-
-          {status === "success" &&
+          {hasCache &&
             Object.keys(cachedUrls).map(key => (
               <a
                 key={key}
