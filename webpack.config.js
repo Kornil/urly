@@ -25,7 +25,7 @@ const clientConfig = {
       {
         test: /\.css$/,
         loader: "style-loader!css-loader"
-      },
+      }
     ]
   },
   resolve: {
@@ -33,7 +33,8 @@ const clientConfig = {
   },
   output: {
     filename: "bundle.js",
-    path: path.join(__dirname, "/public")
+    path: path.join(__dirname, "/public"),
+    publicPath: "http://localhost:8888/public/"
   },
   mode: dev ? "development" : "production",
   plugins: dev
