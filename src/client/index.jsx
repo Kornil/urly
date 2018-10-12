@@ -11,8 +11,9 @@ import App from "./App";
 
 const root = document.getElementById("root");
 
-const hydrate = Component => {
-  ReactDOM.hydrate(
+const render = Component => {
+  const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
+  renderMethod(
     <AppContainer>
       <Component />
     </AppContainer>,
@@ -20,4 +21,5 @@ const hydrate = Component => {
   );
 };
 
-hydrate(App);
+render(App);
+
