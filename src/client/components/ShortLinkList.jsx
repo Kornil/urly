@@ -9,13 +9,8 @@ const StyledShortLinkList = styled.div`
 const ShortLinkList = ({ cachedUrls }) => (
   <StyledShortLinkList>
     {Object.keys(cachedUrls).map(key => (
-      <p>
-        <a
-          key={key}
-          href={cachedUrls[key].url}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+      <p key={key}>
+        <a href={cachedUrls[key].url} rel="noopener noreferrer" target="_blank">
           {key} - {cachedUrls[key].url}
         </a>
       </p>
