@@ -16,15 +16,6 @@ const DefinePluginConfig = new webpack.DefinePlugin({
 });
 
 const clientConfig = {
-  devServer: {
-    host: "localhost",
-    port: "3000",
-    hot: true,
-    headers: {
-      "Access-Control-Allow-Origin": "*"
-    },
-    historyApiFallback: true
-  },
   entry: [
     "react-hot-loader/patch",
     "whatwg-fetch",
