@@ -30,7 +30,7 @@ This will start both webpack configurations in watch mode and hot module replace
 
 Configuration: Webpack4, Babel7, hot module replacement server & client
 
-Testing, deployment: Jest, Enzyme, Prettier (+ Eslint) on commit hook, TravisCi, Now
+Testing, eployment: Jest, Enzyme, Prettier (+ Eslint) on commit hook, TravisCi, Now
 
 Backend: Express, node-cache, React + Emotion (SSR)
 
