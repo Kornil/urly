@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
 import React from "react";
 import express from "express";
 import { renderToString } from "react-dom/server";
@@ -7,12 +9,25 @@ import shortid from "shortid";
 import NodeCache from "node-cache";
 import "isomorphic-fetch";
 
+import webpack from "webpack";
+import webpackDevMiddleware from "webpack-dev-middleware"
+import webpackHotMiddleware from "webpack-hot-middleware";
+import webpackConfig from "../../webpack.config";
+
 import App from "../client/App";
 import htmlMarkup from "./htmlMarkup";
 
 require("es6-promise").polyfill();
 
 const app = express();
+
+const compiler = webpack(webpackConfig[0]);
+
+app.use(webpackDevMiddleware(compiler, {
+    noInfo: true, publicPath: webpackConfig[0].output.publicPath
+}));
+
+app.use(webpackHotMiddleware(compiler));
 
 const urlCache = new NodeCache();
 

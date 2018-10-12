@@ -18,8 +18,9 @@ const DefinePluginConfig = new webpack.DefinePlugin({
 const clientConfig = {
   entry: [
     "react-hot-loader/patch",
+    "webpack-hot-middleware/client",
     "whatwg-fetch",
-    path.join(__dirname, "/src/client/index.jsx")
+    "./src/client/index.jsx"
   ],
   module: {
     rules: [
@@ -63,7 +64,7 @@ const serverConfig = {
     filename: "server.js",
     publicPath: "/"
   },
-  mode: "production",
+  mode: dev ? "development" : "production",
   module: {
     rules: [
       {
