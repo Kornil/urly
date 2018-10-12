@@ -11,9 +11,6 @@ before_install:
 install:
   - npm install
 
-before_script:
-  - greenkeeper-lockfile-update
-
 script:
   - npm run test--ci
   - npm run build
@@ -23,7 +20,7 @@ after_script:
 
 deploy:
   provider: script
-  script: now -p -t $NOW_TOKEN && now alias -t $NOW_TOKEN && now rm personal-website --safe --yes -t $NOW_TOKEN
+  script: now -p -t $NOW_TOKEN && now alias -t $NOW_TOKEN && now rm url-shortener --safe --yes -t $NOW_TOKEN
   skip_cleanup: true
   on:
     master: true
