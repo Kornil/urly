@@ -1,15 +1,8 @@
 const path = require("path");
 const webpack = require("webpack");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
 const nodeExternals = require("webpack-node-externals");
 
 const dev = process.env.NODE_ENV !== "production";
-
-const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
-  template: path.join(__dirname, "/src/index.html"),
-  filename: "index.html",
-  inject: "body"
-});
 
 const DefinePluginConfig = new webpack.DefinePlugin({
   "process.env.NODE_ENV": JSON.stringify("production")
@@ -44,8 +37,8 @@ const clientConfig = {
   },
   mode: dev ? "development" : "production",
   plugins: dev
-    ? [HTMLWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()]
-    : [HTMLWebpackPluginConfig, DefinePluginConfig]
+    ? [new webpack.HotModuleReplacementPlugin()]
+    : [DefinePluginConfig]
 };
 
 const serverConfig = {
