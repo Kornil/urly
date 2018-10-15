@@ -8,13 +8,15 @@ const DefinePluginConfig = new webpack.DefinePlugin({
   "process.env.NODE_ENV": JSON.stringify("production")
 });
 
+const hotReloadMiddlewares = [
+  "react-hot-loader/patch",
+  "webpack-hot-middleware/client"
+];
+
 const clientConfig = {
-  entry: [
-    "react-hot-loader/patch",
-    "webpack-hot-middleware/client",
-    "whatwg-fetch",
-    "./src/client/index.jsx"
-  ],
+  entry: dev
+  ? ["isomorphic-fetch", ...hotReloadMiddlewares, "./src/client/index.jsx"]
+  : ["isomorphic-fetch", "./src/client/index.jsx"],
   module: {
     rules: [
       {
@@ -34,7 +36,7 @@ const clientConfig = {
   output: {
     filename: "bundle.js",
     path: path.join(__dirname, "/public"),
-    publicPath: "http://localhost:8888/public/"
+    publicPath: dev ? "http://localhost:8888/public/": "/"
   },
   mode: dev ? "development" : "production",
   plugins: dev
