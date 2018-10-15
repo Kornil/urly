@@ -98,7 +98,6 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-emotion": "^9.2.12",
-    "shortid": "^2.2.13",
-    "whatwg-fetch": "^3.0.0"
+    "shortid": "^2.2.13"
   }
 }
