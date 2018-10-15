@@ -10,7 +10,7 @@ import NodeCache from "node-cache";
 import "isomorphic-fetch";
 
 import webpack from "webpack";
-import webpackDevMiddleware from "webpack-dev-middleware"
+import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 import webpackConfig from "../../webpack.config";
 
@@ -21,13 +21,18 @@ require("es6-promise").polyfill();
 
 const app = express();
 
-const compiler = webpack(webpackConfig[0]);
+if (process.env.NODE_ENV === "development") {
+  const compiler = webpack(webpackConfig[0]);
 
-app.use(webpackDevMiddleware(compiler, {
-    noInfo: true, publicPath: webpackConfig[0].output.publicPath
-}));
+  app.use(
+    webpackDevMiddleware(compiler, {
+      noInfo: true,
+      publicPath: webpackConfig[0].output.publicPath
+    })
+  );
 
-app.use(webpackHotMiddleware(compiler));
+  app.use(webpackHotMiddleware(compiler));
+}
 
 const urlCache = new NodeCache();
 
@@ -60,17 +65,32 @@ app
     }
   });
 
-app.get("/v1/:hash", (req, res) => {
-  const { hash } = req.params;
+app
+  .route("/v1/:hash")
+  .get((req, res) => {
+    const { hash } = req.params;
 
-  urlCache.get(hash, (err, value) => {
-    if (err || value === undefined) {
-      res.status(404).json(JSON.stringify("Shortlink provided does not exist"));
-    } else {
-      res.redirect(value.url);
-    }
+    urlCache.get(hash, (err, value) => {
+      if (err || value === undefined) {
+        res
+          .status(404)
+          .json(JSON.stringify("Shortlink provided does not exist"));
+      } else {
+        res.redirect(value.url);
+      }
+    });
+  })
+  .delete((req, res) => {
+    const { hash } = req.params;
+    urlCache.del(hash, err => {
+      if (err) {
+        res
+          .status(404)
+          .json(JSON.stringify("Shortlink provided does not exist"));
+      }
+    });
+    res.status(200);
   });
-});
 
 app.get("*", (req, res) => {
   // eslint-disable-next-line react/jsx-filename-extension
