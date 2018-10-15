@@ -1,13 +1,18 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import "normalize.css";
-
 // react dependencies
 import React from "react";
 import ReactDOM from "react-dom";
+import { injectGlobal } from "emotion";
+import emotionNormalize from "emotion-normalize";
 // hot reload for development
 import { AppContainer } from "react-hot-loader";
 
 import App from "./App";
+
+
+/* eslint-disable-next-line */
+injectGlobal`
+  ${emotionNormalize}
+`;
 
 const root = document.getElementById("root");
 
