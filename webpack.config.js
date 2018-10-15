@@ -15,8 +15,8 @@ const hotReloadMiddlewares = [
 
 const clientConfig = {
   entry: dev
-  ? ["isomorphic-fetch", ...hotReloadMiddlewares, "./src/client/index.jsx"]
-  : ["isomorphic-fetch", "./src/client/index.jsx"],
+    ? ["isomorphic-fetch", ...hotReloadMiddlewares, "./src/client/index.jsx"]
+    : ["isomorphic-fetch", "./src/client/index.jsx"],
   module: {
     rules: [
       {
@@ -36,7 +36,7 @@ const clientConfig = {
   output: {
     filename: "bundle.js",
     path: path.join(__dirname, "/public"),
-    publicPath: dev ? "http://localhost:8888/public/": "/"
+    publicPath: dev ? "http://localhost:8888/public/" : "/"
   },
   mode: dev ? "development" : "production",
   plugins: dev
